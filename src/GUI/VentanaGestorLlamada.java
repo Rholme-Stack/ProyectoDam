@@ -7,11 +7,13 @@ import crudpinguino.Incidencias;
 import crudpinguino.Telefonos;
 import java.awt.Color;
 import java.awt.HeadlessException;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -535,8 +537,7 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this,"Campos requeridos: Codigo de cliente y Nombre");
         }
         else{
-            insertarDatos();
-            anadirTelefono();
+            consultaClienteProcedurfe();
             limpiarCajas();
             mostrarDatos();
         }
@@ -567,7 +568,7 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
         DefaultTableModel modelo= new DefaultTableModel(null, titulos);
         
         //String SQL="SELECT * FROM clientes WHERE nombre LIKE '%"+valor+"%'" /*OR nombre_comercial LIKE '%"+valor+"%'" */;
-        String SQL="SELECT clientes.cod_cliente, clientes.nombre, clientes.nombre_comercial, telefonos.telefono, telefonos.contacto_tel, telefonos.email FROM clientes LEFT JOIN telefonos ON clientes.cod_cliente = telefonos.cod_cliente_tel "
+        String SQL="SELECT clientes.cod_cliente, clientes.nombre, clientes.nombre_comercial, telefonos.telefono, telefonos.contacto_tel, telefonos.email FROM clientes LEFT JOIN telefonos ON clientes.cod_cliente = telefonos.cod_cliente "
                 + "WHERE nombre LIKE '%"+valor+"%' OR telefono LIKE '%"+valor+"%' OR email LIKE '%"+valor+"%' ";
         try {
             
@@ -619,7 +620,7 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
             }
             //Elimina tabla Telefonos
             try {
-                String SQL2= "DELETE FROM Telefonos WHERE cod_cliente_tel= "+"\""+jTableClientes.getValueAt(filaSeleccionada, 0)+"\"" ;
+                String SQL2= "DELETE FROM Telefonos WHERE cod_cliente= "+"\""+jTableClientes.getValueAt(filaSeleccionada, 0)+"\"" ;
                 Statement st= con.createStatement();
                 
                 int n=st.executeUpdate(SQL2);
@@ -676,7 +677,7 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
               ///ACTUALIZAR TELEFONO
           Telefonos actTelefono = new Telefonos(jTextFieldCodCliente.getText(), jTextFieldTelefono.getText(), jTextFieldContacto.getText(), jTextFieldEmail.getText());
             
-            String SQL2= "update telefonos set telefono=?, contacto_tel=?, email=? where telefono=? and cod_cliente_tel=?" ;
+            String SQL2= "update telefonos set telefono=?, contacto_tel=?, email=? where telefono=? and cod_cliente=?" ;
             
             int filaSeleccionada=jTableClientes.getSelectedRow();
            String dao=(String)jTableClientes.getValueAt(filaSeleccionada, 3);
@@ -708,7 +709,7 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
         String [] registros= new String[6];
         DefaultTableModel modelo= new DefaultTableModel(null, titulos);
         
-        String SQL="SELECT clientes.cod_cliente, clientes.nombre, clientes.nombre_comercial, telefonos.telefono, telefonos.contacto_tel, telefonos.email FROM clientes LEFT JOIN telefonos ON clientes.cod_cliente = telefonos.cod_cliente_tel";
+        String SQL="SELECT clientes.cod_cliente, clientes.nombre, clientes.nombre_comercial, telefonos.telefono, telefonos.contacto_tel, telefonos.email FROM clientes LEFT JOIN telefonos ON clientes.cod_cliente = telefonos.cod_cliente";
         
         try {
             
@@ -787,50 +788,54 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
           jButtonaAnadirTelefono.setVisible(false);
           jButtonSaveTel.setVisible(true);
           jButtonRegistraLlamada.setVisible(false);
-        
     }
     
+    public void consultaClienteProcedurfe(){
+        
+        try {
+          CallableStatement cs = con.prepareCall("{call consulta_cliente (?,?)}");
+          cs.setString(1,jTextFieldCodCliente.getText());
+          cs.registerOutParameter(2, Types.INTEGER);
+          cs.execute();
+          int resultado = cs.getInt(2);
+          if (resultado>1){
+              insertarDatos();
+              anadirTelefono();        
+        }else{
+              JOptionPane.showMessageDialog(this,"Este cliente ya existe en la tabla!"); 
+          }
+
+        } catch (HeadlessException | SQLException e) {
+            JOptionPane.showMessageDialog(this,"Error llamada Procedimiento 'Consulta_cliente'" + e.getMessage());
+        } 
+    }
     
     public void insertarDatos(){
         
-        System.out.println("aqui pasa");
-       try {
+      
+              try {
             Cliente cliente = new Cliente(jTextFieldCodCliente.getText(),jTextFieldNombre.getText(), jTextFieldNombreComercial.getText());
             String SQL= "insert into clientes (cod_cliente, nombre, nombre_comercial) values(?,?,?)";
-            
-            
-            
+                   
             PreparedStatement pst=con.prepareStatement(SQL);
             
             pst.setString(1, cliente.getCodCliente());
             pst.setString(2, cliente.getNombre());
             pst.setString(3, cliente.getNombreComercial());
             
-            
-            
-            
             pst.execute();
             JOptionPane.showMessageDialog(this,"Registrado contacto Correcto");
-                    
-                  
-                        
-            
-        } catch (Exception e) {
+                      
+        } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(this,"Error registro" + e.getMessage());
-        }
-        
-       
-    
+        } 
     }
     
     public void anadirTelefono(){
-        
-       
+     
         try {
             Telefonos telefono = new Telefonos(jTextFieldCodCliente.getText(),jTextFieldTelefono.getText(), jTextFieldContacto.getText(), jTextFieldEmail.getText());
-            String SQL= "insert into telefonos (cod_cliente_tel, telefono, contacto_tel, email) values(?,?,?,?)";
-            
-            
+            String SQL= "insert into telefonos (cod_cliente, telefono, contacto_tel, email) values(?,?,?,?)";
             
             PreparedStatement pst=con.prepareStatement(SQL);
             
@@ -838,21 +843,14 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
             pst.setString(2, telefono.getTelefono());
             pst.setString(3, telefono.getContactoTel());
             pst.setString(4, telefono.getEmail());
-            
-            
-            
-            
-            
+          
             pst.execute();
             JOptionPane.showMessageDialog(this,"Telefono Registrado Correctamente");
-            
-            
+         
         } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(this,"Error registro telefono" + e.getMessage());
         }
-        
-        
-    
+     
     }
     
     //===========================================================================
@@ -862,7 +860,7 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
         try {
             Incidencias incidencia = new Incidencias(jTextFieldCodCliente.getText(),jComboBoxTipoLlamada.getSelectedItem().toString(),jTextAreaComentarios.getText(), VentanaPrincipal.jLabelUsuario.getText());
             
-            String SQL= "insert into registro_llamada (cod_cliente_llamada, tipo_llamada, comentarios, usuario) values(?,?,?,?)";
+            String SQL= "insert into registro_llamada (cod_cliente, tipo_llamada, comentarios, usuario) values(?,?,?,?)";
             
              PreparedStatement pst=con.prepareStatement(SQL);
             
@@ -892,12 +890,12 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
     
     
     public void mostrarLlamadas(){
-        String [] titulosLlamada= {"id_Llamada","Tipo_Llamada", "Comentarios", "Fecha", "Hora", "Usuario"};
+        String [] titulosLlamada= {"id","Tipo_Llamada", "Comentarios", "Fecha", "Hora", "Usuario"};
         String [] registrosLlamadas= new String[6];
         DefaultTableModel modeloLlamada= new DefaultTableModel(null, titulosLlamada);
                 
-        String SQL="SELECT registro_llamada.id_llamada, registro_llamada.tipo_llamada, registro_llamada.comentarios, registro_llamada.fecha, registro_llamada.hora, registro_llamada.usuario"
-                + "  FROM registro_llamada WHERE registro_llamada.cod_cliente_llamada= '"+jTextFieldCodCliente.getText()+"' ORDER BY registro_llamada.fecha DESC, registro_llamada.hora  DESC";
+        String SQL="SELECT registro_llamada.id, registro_llamada.tipo_llamada, registro_llamada.comentarios, registro_llamada.fecha, registro_llamada.hora, registro_llamada.usuario"
+                + "  FROM registro_llamada WHERE registro_llamada.cod_cliente= '"+jTextFieldCodCliente.getText()+"' ORDER BY registro_llamada.fecha DESC, registro_llamada.hora  DESC";
         
         try {
             
@@ -906,7 +904,7 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
             
             while (rsLlamada.next()){
                 
-                registrosLlamadas [0]=rsLlamada.getString("id_Llamada");
+                registrosLlamadas [0]=rsLlamada.getString("id");
                 registrosLlamadas [1]=rsLlamada.getString("Tipo_Llamada");
                 registrosLlamadas [2]=rsLlamada.getString("Comentarios");
                 registrosLlamadas [3]=rsLlamada.getString( "Fecha");

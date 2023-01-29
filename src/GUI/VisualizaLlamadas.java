@@ -248,7 +248,7 @@ public class VisualizaLlamadas extends javax.swing.JDialog {
             ///ACTUALIZAR TELEFONO
             Incidencias inc = new Incidencias(jTextArea1.getText());
 
-            String SQL = "update registro_llamada set comentarios=? where id_llamada=?";
+            String SQL = "update registro_llamada set comentarios=? where id=?";
 
             PreparedStatement pst = con.prepareStatement(SQL);
             pst.setString(1, inc.getComentarios());
