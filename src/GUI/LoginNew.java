@@ -415,7 +415,7 @@ public class LoginNew extends javax.swing.JFrame {
                     
                     miventana.setVisible(true);
                     miventana.setLocationRelativeTo(this);
-                    miventana.setExtendedState(SistemaVentana.MAXIMIZED_BOTH);
+                   // miventana.setExtendedState(VentanaGestorLlamada.MAXIMIZED_BOTH);
                     Usuarios user = new Usuarios(jTextFieldUsuario.getText().toUpperCase());
                     String nombre = user.getNombre();
                     VentanaPrincipal.jLabelUsuario.setText(nombre);
