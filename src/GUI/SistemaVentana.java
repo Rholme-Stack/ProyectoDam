@@ -60,7 +60,6 @@ public class SistemaVentana extends javax.swing.JFrame {
         jLabelTipoLlamada = new javax.swing.JLabel();
         jComboBoxTipoLlamada = new javax.swing.JComboBox<>();
         jButtonNuevo = new javax.swing.JButton();
-        jButtonGuardar = new javax.swing.JButton();
         jButtonEliminar = new javax.swing.JButton();
         jButtonActualizar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -86,6 +85,7 @@ public class SistemaVentana extends javax.swing.JFrame {
         jLabelEmail = new javax.swing.JLabel();
         jTextFieldEmail = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
+        jButtonGuardar1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableClientes = new javax.swing.JTable();
         jLabelBusqueda = new javax.swing.JLabel();
@@ -128,21 +128,13 @@ public class SistemaVentana extends javax.swing.JFrame {
         });
         jPanel1.add(jButtonNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, 50, 30));
 
-        jButtonGuardar.setText("Guardar");
-        jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonGuardarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButtonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 90, 99, -1));
-
         jButtonEliminar.setText("Eliminar");
         jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonEliminarActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 140, 99, -1));
+        jPanel1.add(jButtonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 160, 99, -1));
 
         jButtonActualizar.setText("Actualizar");
         jButtonActualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -150,7 +142,7 @@ public class SistemaVentana extends javax.swing.JFrame {
                 jButtonActualizarActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 181, 99, -1));
+        jPanel1.add(jButtonActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 190, 99, -1));
 
         jTextAreaComentarios.setColumns(20);
         jTextAreaComentarios.setLineWrap(true);
@@ -241,6 +233,14 @@ public class SistemaVentana extends javax.swing.JFrame {
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 360, 300));
         jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 392, 480, 10));
 
+        jButtonGuardar1.setText("Guardar");
+        jButtonGuardar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGuardar1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButtonGuardar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 130, 99, -1));
+
         jTableClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -252,11 +252,9 @@ public class SistemaVentana extends javax.swing.JFrame {
 
             }
         ));
-        jTableClientes.setIntercellSpacing(new java.awt.Dimension(0, 0));
         jTableClientes.setRowHeight(22);
         jTableClientes.setSelectionBackground(new java.awt.Color(255, 99, 71));
         jTableClientes.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        jTableClientes.setShowVerticalLines(false);
         jTableClientes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableClientesMouseClicked(evt);
@@ -302,7 +300,6 @@ public class SistemaVentana extends javax.swing.JFrame {
 
             }
         ));
-        jTableLlamadas.setIntercellSpacing(new java.awt.Dimension(0, 0));
         jTableLlamadas.setRowHeight(22);
         jTableLlamadas.setSelectionBackground(new java.awt.Color(255, 99, 71));
         jTableLlamadas.setSelectionForeground(new java.awt.Color(255, 255, 254));
@@ -459,23 +456,6 @@ public class SistemaVentana extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
-    private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-        //boton de guardar
-
-        if(jTextFieldCodCliente.getText().isEmpty() || jTextFieldNombre.getText().isEmpty() ){
-            
-            JOptionPane.showMessageDialog(this,"Campos requeridos: Codigo de cliente y Nombre");
-        }
-        else{
-            insertarDatos();
-            anadirTelefono();
-            limpiarCajas();
-            mostrarDatos();
-            
-        }
-
-    }//GEN-LAST:event_jButtonGuardarActionPerformed
-
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
         //boton para limpiar las cajas
         limpiarCajas();
@@ -557,6 +537,10 @@ public class SistemaVentana extends javax.swing.JFrame {
     private void jTableLlamadasFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableLlamadasFocusGained
        mostrarLlamadas();
     }//GEN-LAST:event_jTableLlamadasFocusGained
+
+    private void jButtonGuardar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonGuardar1ActionPerformed
     
     
     
@@ -599,7 +583,7 @@ public class SistemaVentana extends javax.swing.JFrame {
             
             
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"no se ha podido subir los datos" + e.getMessage());
+            JOptionPane.showMessageDialog(null,"no se ha podido subir los datos a la tabla" + e.getMessage());
         }
         }
     
@@ -748,7 +732,7 @@ public class SistemaVentana extends javax.swing.JFrame {
           jTextFieldEmail.setBackground(Color.white);
           //Config inicla botones
           jButtonNuevo.setVisible(true);
-          jButtonGuardar.setVisible(true);
+          jButtonNew.setVisible(true);
           jButtonEliminar.setVisible(true);
           jButtonActualizar.setVisible(true);
           jButtonaAnadirTelefono.setVisible(true);
@@ -772,7 +756,7 @@ public class SistemaVentana extends javax.swing.JFrame {
           ///habilita el boton añadir tel y oculta el resto
           
           jButtonNuevo.setVisible(true);
-          jButtonGuardar.setVisible(false);
+          jButtonNew.setVisible(false);
           jButtonEliminar.setVisible(false);
           jButtonActualizar.setVisible(false);
           jButtonaAnadirTelefono.setVisible(false);
@@ -838,7 +822,7 @@ public class SistemaVentana extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,"Telefono Registrado Correctamente");
             
             
-        } catch (Exception e) {
+        } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(this,"Error registro telefono" + e.getMessage());
         }
         
@@ -871,7 +855,7 @@ public class SistemaVentana extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,"Registo Correcto");
             
             
-        } catch (Exception e) {
+        } catch (HeadlessException | SQLException e) {
             
              JOptionPane.showMessageDialog(this,"Error registro, incidencias" + e.getMessage());
         }
@@ -952,17 +936,15 @@ public class SistemaVentana extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SistemaVentana().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new SistemaVentana().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonActualizar;
     private javax.swing.JButton jButtonEliminar;
-    private javax.swing.JButton jButtonGuardar;
+    private javax.swing.JButton jButtonGuardar1;
     private javax.swing.JButton jButtonNuevo;
     private javax.swing.JButton jButtonRegistraLlamada;
     private javax.swing.JButton jButtonSaveTel;

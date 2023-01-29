@@ -3,9 +3,11 @@ package GUI;
 
 import ConexionSql.ConexionSQL;
 import crudpinguino.Usuarios;
+import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 
@@ -357,10 +359,8 @@ public class LoginNew extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LoginNew().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new LoginNew().setVisible(true);
         });
     }
 
@@ -432,7 +432,7 @@ public class LoginNew extends javax.swing.JFrame {
                 
             
             
-        } catch (Exception e) {
+        } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(this, "Error Login" + e.getMessage());
         }
         

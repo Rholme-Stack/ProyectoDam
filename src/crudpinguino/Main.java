@@ -7,13 +7,6 @@ package crudpinguino;
 
 
 import GUI.LoginNew;
-import GUI.SistemaVentana;
-
-
-
-
-
-
 
 /**
  *
@@ -26,19 +19,8 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        
-       
-        
-        
-        
         LoginNew login= new LoginNew();
         login.setLocationRelativeTo(null);
-        
         login.setVisible(true);
-        
-        
-       
-        
     }
-    
 }

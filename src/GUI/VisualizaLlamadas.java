@@ -6,11 +6,13 @@ package GUI;
 
 import ConexionSql.ConexionSQL;
 import crudpinguino.Incidencias;
+import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import GUI.VentanaGestorLlamada;
+
 
 /**
  *
@@ -40,6 +42,7 @@ public class VisualizaLlamadas extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabelTitulo = new javax.swing.JLabel();
         jLabelUsuario = new javax.swing.JLabel();
@@ -50,6 +53,9 @@ public class VisualizaLlamadas extends javax.swing.JDialog {
         jTextArea1 = new javax.swing.JTextArea();
         jButtonGuardar = new javax.swing.JButton();
         jLabelId = new javax.swing.JLabel();
+        jLabelId1 = new javax.swing.JLabel();
+
+        jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -98,28 +104,39 @@ public class VisualizaLlamadas extends javax.swing.JDialog {
         jLabelId.setForeground(new java.awt.Color(255, 255, 255));
         jLabelId.setText("idLlamada");
 
+        jLabelId1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelId1.setText("ID:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(125, 125, 125)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButtonGuardar)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabelUsuario)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabelId, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(17, 17, 17))
-                        .addComponent(jLabelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabelTipoLlamada)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabelFecha)
-                            .addGap(45, 45, 45)
-                            .addComponent(jLabelHora))
-                        .addComponent(jScrollPane1)))
-                .addContainerGap(138, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jButtonGuardar)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabelTipoLlamada)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabelFecha)
+                                                .addGap(45, 45, 45)
+                                                .addComponent(jLabelHora)))
+                                        .addGap(26, 26, 26))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabelUsuario)
+                                        .addGap(64, 64, 64)
+                                        .addComponent(jLabelId1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addComponent(jLabelId, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(17, 17, 17))))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(112, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,8 +146,9 @@ public class VisualizaLlamadas extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelId))
-                .addGap(18, 18, 18)
+                    .addComponent(jLabelId)
+                    .addComponent(jLabelId1))
+                .addGap(52, 52, 52)
                 .addComponent(jLabelTipoLlamada)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -140,7 +158,7 @@ public class VisualizaLlamadas extends javax.swing.JDialog {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonGuardar)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -151,8 +169,6 @@ public class VisualizaLlamadas extends javax.swing.JDialog {
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         actualiza();
         dispose();
-
-
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -168,8 +184,6 @@ public class VisualizaLlamadas extends javax.swing.JDialog {
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             dispose();
         }
-
-
     }//GEN-LAST:event_jTextArea1KeyPressed
 
     /**
@@ -200,25 +214,25 @@ public class VisualizaLlamadas extends javax.swing.JDialog {
         //</editor-fold>
 
         /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                VisualizaLlamadas dialog = new VisualizaLlamadas(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            VisualizaLlamadas dialog = new VisualizaLlamadas(new javax.swing.JFrame(), true);
+            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    System.exit(0);
+                }
+            });
+            dialog.setVisible(true); 
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonGuardar;
+    private javax.swing.JLabel jLabel1;
     public static javax.swing.JLabel jLabelFecha;
     public static javax.swing.JLabel jLabelHora;
     public static javax.swing.JLabel jLabelId;
+    public static javax.swing.JLabel jLabelId1;
     public static javax.swing.JLabel jLabelTipoLlamada;
     private javax.swing.JLabel jLabelTitulo;
     public static javax.swing.JLabel jLabelUsuario;
@@ -243,8 +257,8 @@ public class VisualizaLlamadas extends javax.swing.JDialog {
             pst.execute();
             JOptionPane.showMessageDialog(this, "Registrado Actualizado");
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error actualizar registro " + e.getMessage());
+        } catch (HeadlessException | SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error actualizar registro" + e.getMessage());
         }
 
     }

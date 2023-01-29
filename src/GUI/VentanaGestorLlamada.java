@@ -12,8 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
@@ -48,7 +48,7 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
         jLabelTipoLlamada = new javax.swing.JLabel();
         jComboBoxTipoLlamada = new javax.swing.JComboBox<>();
         jButtonNuevo = new javax.swing.JButton();
-        jButtonGuardar = new javax.swing.JButton();
+        jButtonNew = new javax.swing.JButton();
         jButtonEliminar = new javax.swing.JButton();
         jButtonActualizar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -71,6 +71,7 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
         jLabelEmail = new javax.swing.JLabel();
         jTextFieldEmail = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
+        jButtonGuardar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -111,13 +112,13 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
         });
         jPanel1.add(jButtonNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, 50, 30));
 
-        jButtonGuardar.setText("Guardar");
-        jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
+        jButtonNew.setText("Nuevo");
+        jButtonNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonGuardarActionPerformed(evt);
+                jButtonNewActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 90, 99, -1));
+        jPanel1.add(jButtonNew, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, 99, -1));
 
         jButtonEliminar.setText("Eliminar");
         jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -125,7 +126,7 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
                 jButtonEliminarActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 140, 99, -1));
+        jPanel1.add(jButtonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 160, 99, -1));
 
         jButtonActualizar.setText("Actualizar");
         jButtonActualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -133,7 +134,7 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
                 jButtonActualizarActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 181, 99, -1));
+        jPanel1.add(jButtonActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 190, 99, -1));
 
         jTextAreaComentarios.setColumns(20);
         jTextAreaComentarios.setLineWrap(true);
@@ -146,7 +147,7 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(jTextAreaComentarios);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 460, 277, 140));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 460, 360, 140));
 
         jLabelComentarios.setForeground(new java.awt.Color(255, 255, 255));
         jLabelComentarios.setText("Comentarios:");
@@ -167,7 +168,7 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
                 jButtonRegistraLlamadaActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonRegistraLlamada, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 610, -1, -1));
+        jPanel1.add(jButtonRegistraLlamada, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 420, -1, -1));
 
         jButtonSaveTel.setText("Añadir telefono");
         jButtonSaveTel.addActionListener(new java.awt.event.ActionListener() {
@@ -213,6 +214,19 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 360, 300));
         jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 392, 480, 10));
 
+        jButtonGuardar.setText("Guardar");
+        jButtonGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonGuardarMouseClicked(evt);
+            }
+        });
+        jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGuardarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButtonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 130, 99, -1));
+
         getContentPane().add(jPanel1, java.awt.BorderLayout.WEST);
 
         jPanel4.setBackground(new java.awt.Color(102, 102, 102));
@@ -232,10 +246,8 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
                 "Title 1"
             }
         ));
-        jTableClientes.setIntercellSpacing(new java.awt.Dimension(0, 0));
         jTableClientes.setRowHeight(22);
         jTableClientes.setSelectionBackground(new java.awt.Color(255, 99, 71));
-        jTableClientes.setShowVerticalLines(false);
         jTableClientes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableClientesMouseClicked(evt);
@@ -277,7 +289,6 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
 
             }
         ));
-        jTableLlamadas.setIntercellSpacing(new java.awt.Dimension(0, 0));
         jTableLlamadas.setRowHeight(22);
         jTableLlamadas.setSelectionBackground(new java.awt.Color(255, 99, 71));
         jTableLlamadas.setSelectionForeground(new java.awt.Color(255, 255, 254));
@@ -464,22 +475,6 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
         // Saving code here
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
-    private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-        //boton de guardar
-
-        if(jTextFieldCodCliente.getText().isEmpty() || jTextFieldNombre.getText().isEmpty() ){
-
-            JOptionPane.showMessageDialog(this,"Campos requeridos: Codigo de cliente y Nombre");
-        }
-        else{
-            insertarDatos();
-            anadirTelefono();
-            limpiarCajas();
-            mostrarDatos();
-
-        }
-    }//GEN-LAST:event_jButtonGuardarActionPerformed
-
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
         //boton para limpiar las cajas
         limpiarCajas();
@@ -533,7 +528,33 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
         jTextFieldBusqueda.setText("");
 
     }//GEN-LAST:event_jTableClientesMouseClicked
-/*============FUNCIONES=============================================*/
+
+    private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
+         if(jTextFieldCodCliente.getText().isEmpty() || jTextFieldNombre.getText().isEmpty() ){
+
+            JOptionPane.showMessageDialog(this,"Campos requeridos: Codigo de cliente y Nombre");
+        }
+        else{
+            insertarDatos();
+            anadirTelefono();
+            limpiarCajas();
+            mostrarDatos();
+        }
+    }//GEN-LAST:event_jButtonGuardarActionPerformed
+
+    private void jButtonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewActionPerformed
+        //boton de limpiar registros "new"
+           limpiarCajas();       
+    }//GEN-LAST:event_jButtonNewActionPerformed
+
+    private void jButtonGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonGuardarMouseClicked
+        // TODO add your handling code here:
+         // TODO add your handling code here:
+       
+    }//GEN-LAST:event_jButtonGuardarMouseClicked
+
+    
+    /*============FUNCIONES=============================================*/
     
     ///=============================================================metodos  Rodrigo
     
@@ -572,7 +593,7 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
             
             
             
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null,"no se ha podido subir los datos" + e.getMessage());
         }
         }
@@ -583,21 +604,31 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
             
             
             int filaSeleccionada=jTableClientes.getSelectedRow();
-            
+            //Elimina tabla clientes
             try {
                 String SQL= "DELETE FROM clientes WHERE cod_cliente= "+"\""+jTableClientes.getValueAt(filaSeleccionada, 0)+"\"" ;
                 Statement st= con.createStatement();
                 
                 int n=st.executeUpdate(SQL);
-                
+                               
                 if(n>=0){
-                    JOptionPane.showMessageDialog(null,"Registro Eliminado!");
-                    
-                }
+                    JOptionPane.showMessageDialog(null,"Registro 'Cliente' Eliminado!");
+                }                
+            } catch (HeadlessException | SQLException e) {
+                  JOptionPane.showMessageDialog(null,"Error al eliminar Registro 'Tabla Cliente'!" + e.getMessage());
+            }
+            //Elimina tabla Telefonos
+            try {
+                String SQL2= "DELETE FROM Telefonos WHERE cod_cliente_tel= "+"\""+jTableClientes.getValueAt(filaSeleccionada, 0)+"\"" ;
+                Statement st= con.createStatement();
                 
-            } catch (Exception e) {
-                  JOptionPane.showMessageDialog(null,"Error al eliminar Registro!" + e.getMessage());
-                
+                int n=st.executeUpdate(SQL2);
+                               
+                if(n>=0){
+                    JOptionPane.showMessageDialog(null,"Registro 'Telefonos' Eliminado!");
+                }                
+            } catch (HeadlessException | SQLException e) {
+                  JOptionPane.showMessageDialog(null,"Error al eliminar Registro 'Tabla Telefono'!" + e.getMessage());
             }
         
         
@@ -664,7 +695,7 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
             
           
             
-        } catch (Exception e) {
+        } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(null,"Error actualizar registro " + e.getMessage());
         }
         
@@ -703,8 +734,8 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
 
             columnModel.getColumn(0).setMaxWidth(90 );
             
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"no se ha podido subir los datos" + e.getMessage());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"no se ha podido subir los datos a la tabla" + e.getMessage());
         }
         
     
@@ -726,7 +757,7 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
           jTextFieldEmail.setBackground(Color.white);
           //Config inicla botones
           jButtonNuevo.setVisible(true);
-          jButtonGuardar.setVisible(true);
+          jButtonNew.setVisible(true);
           jButtonEliminar.setVisible(true);
           jButtonActualizar.setVisible(true);
           jButtonaAnadirTelefono.setVisible(true);
@@ -750,7 +781,7 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
           ///habilita el boton añadir tel y oculta el resto
           
           jButtonNuevo.setVisible(true);
-          jButtonGuardar.setVisible(false);
+          jButtonNew.setVisible(false);
           jButtonEliminar.setVisible(false);
           jButtonActualizar.setVisible(false);
           jButtonaAnadirTelefono.setVisible(false);
@@ -762,8 +793,8 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
     
     public void insertarDatos(){
         
-       
-        try {
+        System.out.println("aqui pasa");
+       try {
             Cliente cliente = new Cliente(jTextFieldCodCliente.getText(),jTextFieldNombre.getText(), jTextFieldNombreComercial.getText());
             String SQL= "insert into clientes (cod_cliente, nombre, nombre_comercial) values(?,?,?)";
             
@@ -816,7 +847,7 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this,"Telefono Registrado Correctamente");
             
             
-        } catch (Exception e) {
+        } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(this,"Error registro telefono" + e.getMessage());
         }
         
@@ -849,9 +880,9 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this,"Registo Correcto");
             
             
-        } catch (Exception e) {
+        } catch (HeadlessException | SQLException e) {
             
-             JOptionPane.showMessageDialog(this,"Error registro, incidencias" + e.getMessage());
+             JOptionPane.showMessageDialog(this,"Error registro, tabla incidencias" + e.getMessage());
         }
         
         jTextAreaComentarios.setText("");
@@ -864,7 +895,7 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
         String [] titulosLlamada= {"id_Llamada","Tipo_Llamada", "Comentarios", "Fecha", "Hora", "Usuario"};
         String [] registrosLlamadas= new String[6];
         DefaultTableModel modeloLlamada= new DefaultTableModel(null, titulosLlamada);
-        
+                
         String SQL="SELECT registro_llamada.id_llamada, registro_llamada.tipo_llamada, registro_llamada.comentarios, registro_llamada.fecha, registro_llamada.hora, registro_llamada.usuario"
                 + "  FROM registro_llamada WHERE registro_llamada.cod_cliente_llamada= '"+jTextFieldCodCliente.getText()+"' ORDER BY registro_llamada.fecha DESC, registro_llamada.hora  DESC";
         
@@ -878,7 +909,7 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
                 registrosLlamadas [0]=rsLlamada.getString("id_Llamada");
                 registrosLlamadas [1]=rsLlamada.getString("Tipo_Llamada");
                 registrosLlamadas [2]=rsLlamada.getString("Comentarios");
-                registrosLlamadas [3]=rsLlamada.getString("Fecha");
+                registrosLlamadas [3]=rsLlamada.getString( "Fecha");
                 registrosLlamadas [4]=rsLlamada.getString("Hora");
                 registrosLlamadas [5]=rsLlamada.getString("Usuario");
                 
@@ -918,6 +949,7 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButtonActualizar;
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonGuardar;
+    private javax.swing.JButton jButtonNew;
     private javax.swing.JButton jButtonNuevo;
     private javax.swing.JButton jButtonRegistraLlamada;
     private javax.swing.JButton jButtonSaveTel;
