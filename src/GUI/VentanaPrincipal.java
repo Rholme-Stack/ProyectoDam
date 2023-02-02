@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
+
 /**
  *
  * @author Pc
@@ -24,14 +25,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         //línea para cambiar el icono de la ventana
         setIconImage(new ImageIcon(getClass().getResource("/imagenes/icons8_penguin_16px.png")).getImage());
         
-        
-        
-        
-        
+         
     }
 
-    
-    
     
 
     /**
@@ -52,8 +48,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanelMenu = new javax.swing.JPanel();
         jLabelGestorLlamada = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        jLabelDashboard = new javax.swing.JLabel();
         jPanelDesktop = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -109,15 +104,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_dashboard_32px.png"))); // NOI18N
-        jLabel4.setText("Dashboard");
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_dashboard_32px.png"))); // NOI18N
-        jLabel5.setText("Creditos");
+        jLabelDashboard.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabelDashboard.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelDashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_dashboard_32px.png"))); // NOI18N
+        jLabelDashboard.setText("Dashboard");
+        jLabelDashboard.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelDashboardMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelMenuLayout = new javax.swing.GroupLayout(jPanelMenu);
         jPanelMenu.setLayout(jPanelMenuLayout);
@@ -127,8 +122,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelGestorLlamada, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabelDashboard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanelMenuLayout.setVerticalGroup(
@@ -137,10 +131,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addComponent(jLabelGestorLlamada)
                 .addGap(27, 27, 27)
-                .addComponent(jLabel4)
-                .addGap(27, 27, 27)
-                .addComponent(jLabel5)
-                .addContainerGap(347, Short.MAX_VALUE))
+                .addComponent(jLabelDashboard)
+                .addContainerGap(406, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanelMenu, java.awt.BorderLayout.WEST);
@@ -194,20 +186,56 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private VentanaGestorLlamada v1;
+    private DashBoardNew db;
+            
+    
     private void jLabelGestorLlamadaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelGestorLlamadaMouseClicked
         try {
-            VentanaGestorLlamada v1 = new VentanaGestorLlamada();
+            cerrarDashBoardNew(db);
+            v1 = new VentanaGestorLlamada();
             jPanelDesktop.add(v1);
-            v1.setMaximum(true);
-           
+            v1.setMaximum(true);           
             v1.setVisible(true);
+            
         } catch (PropertyVetoException ex) {
             Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }    
+    
     }//GEN-LAST:event_jLabelGestorLlamadaMouseClicked
 
-    /**
+
+    private void jLabelDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelDashboardMouseClicked
+     try {
+            cerrarVentanaGestorLlamada(v1);
+            db = new DashBoardNew();
+            jPanelDesktop.add(db);
+            db.setMaximum(true);
+           
+            db.setVisible(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }  
+    }//GEN-LAST:event_jLabelDashboardMouseClicked
+
+    
+     private void cerrarVentanaGestorLlamada(VentanaGestorLlamada v) {
+    if (v != null) {
+        v.dispose();
+    }
+     }
+     
+      private void cerrarDashBoardNew(DashBoardNew b) {
+          
+     if (b != null) {
+        b.dispose();
+     }
+      }
+     
+     
+
+
+/**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -238,13 +266,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             new VentanaPrincipal().setVisible(true);
         });
+
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabelDashboard;
     private javax.swing.JLabel jLabelGestorLlamada;
     private javax.swing.JLabel jLabelLogo;
     private javax.swing.JLabel jLabelTitulo;
@@ -257,5 +286,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelDesktop;
     private javax.swing.JPanel jPanelMenu;
     // End of variables declaration//GEN-END:variables
+
+   
+
+
 }
 

@@ -14,7 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
-import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -26,7 +25,7 @@ import javax.swing.table.TableColumnModel;
 public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
 
     
-   ConexionSQL cc= new ConexionSQL();
+    ConexionSQL cc= new ConexionSQL();
     Connection con =cc.conexion();
      
     public VentanaGestorLlamada() {
