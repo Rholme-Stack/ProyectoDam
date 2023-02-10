@@ -18,6 +18,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
+
+
 /**
  *
  * @author Pc
@@ -412,11 +414,10 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this,"Es necesario seleccionar un cliente.");
         }
         else{
-
             registroLlamada();
-
             mostrarLlamadas();
         }
+       
     }//GEN-LAST:event_jButtonRegistraLlamadaActionPerformed
 
     private void jButtonaAnadirTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonaAnadirTelefonoActionPerformed
@@ -443,12 +444,10 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this,"Es necesario seleccionar un cliente.");
         }
         else{
-
             actualizarDatos(jTextFieldCodCliente.getText());
             actualizarTelefono();
             limpiarCajas();
             mostrarDatos();
-
         }
     }//GEN-LAST:event_jButtonActualizarActionPerformed
 
@@ -556,8 +555,8 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
     
     /*============FUNCIONES=============================================*/
     
-    ///=============================================================metodos  Rodrigo
-    
+    //funciones Insertar, deletar y actualizar datos
+     
         public void filtrarDatos(String valor){
             
         
@@ -589,10 +588,7 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
             
             jTableClientes.setModel(modelo);
             
-            
-            
-            
-            
+                    
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null,"no se ha podido subir los datos" + e.getMessage());
         }
@@ -630,15 +626,12 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
             } catch (HeadlessException | SQLException e) {
                   JOptionPane.showMessageDialog(null,"Error al eliminar Registro 'Tabla Telefono'!" + e.getMessage());
             }
-        
-        
         }
         
     
     
         public void actualizarDatos(String codigo){
-          
-        
+       
         try {
             Cliente actCliente = new Cliente(jTextFieldCodCliente.getText(),jTextFieldNombre.getText(), jTextFieldNombreComercial.getText());
             
@@ -658,10 +651,7 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
             pst.setString(4, dao);
             pst.execute();
             JOptionPane.showMessageDialog(this,"Registrado Actualizado");
-            
-            
-          
-            
+         
         } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(this,"Error actualizar registro" + e.getMessage());
         }
@@ -670,9 +660,7 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
         public void actualizarTelefono(){
         
         try {
-                 
-           
-            
+      
               ///ACTUALIZAR TELEFONO
           Telefonos actTelefono = new Telefonos(jTextFieldCodCliente.getText(), jTextFieldTelefono.getText(), jTextFieldContacto.getText(), jTextFieldEmail.getText());
             
@@ -691,55 +679,13 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
             pst.setString(5, dao2);
             pst.execute();
             JOptionPane.showMessageDialog(this,"Registrado telefono Actualizado");
-            
-            
-          
-            
+        
         } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(null,"Error actualizar registro " + e.getMessage());
         }
-        
-        
-    
     }
     
-    public void mostrarDatos(){
-        String [] titulos= {"cod Cliente","Nombre", "Nombre_Comercial", "Telefono","Contacto", "Email"};
-        String [] registros= new String[6];
-        DefaultTableModel modelo= new DefaultTableModel(null, titulos);
-        
-        String SQL="SELECT clientes.cod_cliente, clientes.nombre, clientes.nombre_comercial, telefonos.telefono, telefonos.contacto_tel, telefonos.email FROM clientes LEFT JOIN telefonos ON clientes.cod_cliente = telefonos.cod_cliente";
-        
-        try {
-            
-            Statement st= con.createStatement();
-            ResultSet rs=st.executeQuery(SQL);
-            
-            while (rs.next()){
-                
-                registros [0]=rs.getString("cod_cliente");
-                registros [1]=rs.getString("nombre");
-                registros [2]=rs.getString("nombre_comercial");
-                registros [3]=rs.getString("telefono");
-                registros [4]=rs.getString("contacto_tel");
-                registros [5]=rs.getString("email");
-                
-                modelo.addRow(registros);
-            
-            }
-            
-            jTableClientes.setModel(modelo);
-            
-            TableColumnModel columnModel = jTableClientes.getColumnModel();
-
-            columnModel.getColumn(0).setMaxWidth(90 );
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"no se ha podido subir los datos a la tabla" + e.getMessage());
-        }
-        
     
-    }
     
     public void limpiarCajas(){
         
@@ -763,10 +709,7 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
           jButtonaAnadirTelefono.setVisible(true);
           jButtonSaveTel.setVisible(false);
           jButtonRegistraLlamada.setVisible(true);
-          
-          
-          
-        
+           
     }
     
     public void limpiarCajasTelefono(){
@@ -849,12 +792,56 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
         } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(this,"Error registro telefono" + e.getMessage());
         }
-     
+    }
+    
+    //===========================================================================
+    //funciones Mostrar llamadas Jtable superior
+        
+    public final void mostrarDatos(){
+        String [] titulos= {"cod Cliente","Nombre", "Nombre_Comercial", "Telefono","Contacto", "Email"};
+        String [] registros= new String[6];
+        DefaultTableModel modelo= new DefaultTableModel(null, titulos);
+        
+        String SQL="SELECT clientes.cod_cliente, clientes.nombre, clientes.nombre_comercial, telefonos.telefono, telefonos.contacto_tel, telefonos.email FROM clientes LEFT JOIN telefonos ON clientes.cod_cliente = telefonos.cod_cliente";
+        
+        try {
+            
+            Statement st= con.createStatement();
+            ResultSet rs=st.executeQuery(SQL);
+            
+            while (rs.next()){
+                
+                registros [0]=rs.getString("cod_cliente");
+                registros [1]=rs.getString("nombre");
+                registros [2]=rs.getString("nombre_comercial");
+                registros [3]=rs.getString("telefono");
+                registros [4]=rs.getString("contacto_tel");
+                registros [5]=rs.getString("email");
+                
+                modelo.addRow(registros);
+            
+            }
+            
+            jTableClientes.setModel(modelo);
+            
+            TableColumnModel columnModel = jTableClientes.getColumnModel();
+
+            columnModel.getColumn(0).setMaxWidth(90 );
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"no se ha podido subir los datos a la tabla" + e.getMessage());
+        }
     }
     
     //===========================================================================
     ///funciones registro llamada
     public void registroLlamada(){
+       /* String codCliente = "c99999";
+        String tipoLlamada = "llamada test hibernate";
+        String comentarios = "Llamada hibernate";
+        String usuario = "usuario23";
+        
+        InsertHibernate(codCliente, tipoLlamada, comentarios, usuario);*/
         
         try {
             Incidencias incidencia = new Incidencias(jTextFieldCodCliente.getText(),jComboBoxTipoLlamada.getSelectedItem().toString(),jTextAreaComentarios.getText(), VentanaPrincipal.jLabelUsuario.getText());
@@ -867,12 +854,7 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
             pst.setString(2, incidencia.getTipoLlamada());
             pst.setString(3, incidencia.getComentarios());
             pst.setString(4, incidencia.getUsuario());
-            
-            
-            
-            
-            
-            
+          
             pst.execute();
             JOptionPane.showMessageDialog(this,"Registo Correcto");
             
@@ -882,11 +864,11 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
              JOptionPane.showMessageDialog(this,"Error registro, tabla incidencias" + e.getMessage());
         }
         
-        jTextAreaComentarios.setText("");
-        
+        jTextAreaComentarios.setText(""); 
     }
     
-    
+     //===========================================================================
+    ///funciones mostrar llamada jTable
     
     public void mostrarLlamadas(){
         String [] titulosLlamada= {"id","Tipo_Llamada", "Comentarios", "Fecha", "Hora", "Usuario"};
@@ -910,13 +892,10 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
                 registrosLlamadas [4]=rsLlamada.getString("Hora");
                 registrosLlamadas [5]=rsLlamada.getString("Usuario");
                 
-                
                 modeloLlamada.addRow(registrosLlamadas);
-            
             }
             
             jTableLlamadas.setModel(modeloLlamada);
-            
             
             TableColumnModel columnModel = jTableLlamadas.getColumnModel();
 
@@ -927,19 +906,12 @@ public class VentanaGestorLlamada extends javax.swing.JInternalFrame {
             columnModel.getColumn(4).setMaxWidth(130);
             columnModel.getColumn(5).setMaxWidth(250);
             
-            
-            
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this,"no se ha podido subir los datos de llamadas" + e.getMessage());
         }
-        
-    
     }
     
-    
-    
-    
-    
+ 
     //==========================================================================
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

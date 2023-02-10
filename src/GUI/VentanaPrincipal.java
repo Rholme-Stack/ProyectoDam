@@ -23,7 +23,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     public VentanaPrincipal() {
         initComponents();
         //línea para cambiar el icono de la ventana
-        setIconImage(new ImageIcon(getClass().getResource("/imagenes/icons8_penguin_16px.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/imagenes/icons8_penguin_32px_1.png")).getImage());
         
          
     }

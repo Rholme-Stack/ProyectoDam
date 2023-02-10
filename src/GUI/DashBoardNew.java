@@ -104,7 +104,7 @@ public class DashBoardNew extends javax.swing.JInternalFrame {
     private void recuperaDatos() {
         
         
-        String [] titulos= {"Tipo de llamada","Cantidad de Llamadas", "Porcentaje"};
+        String [] titulos= {"Tipo de llamada","Cantidad de Llamadas", "Porcentaje %"};
         String [] registros= new String[3];
         DefaultTableModel modelo= new DefaultTableModel(null, titulos);
 
